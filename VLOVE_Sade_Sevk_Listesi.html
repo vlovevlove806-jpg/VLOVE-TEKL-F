@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VLOVE Sevk Listesi</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+background:#efefef;
+font-family:Arial,Helvetica,sans-serif;
+color:#111;
+}
+
+.toolbar{
+max-width:1200px;
+margin:14px auto;
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+padding:0 10px;
+}
+
+button{
+padding:11px 16px;
+border:1px solid #111;
+background:#fff;
+border-radius:8px;
+font-weight:700;
+cursor:pointer;
+}
+
+.page{
+width:210mm;
+min-height:297mm;
+margin:auto;
+background:#fff;
+padding:8mm;
+box-shadow:0 0 14px rgba(0,0,0,.12);
+}
+
+.header{
+border:1.5px solid #111;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px;
+margin-bottom:10px;
+}
+
+.logo h1{
+margin:0;
+font-size:32px;
+letter-spacing:2px;
+}
+
+.logo p{
+margin:3px 0 0;
+font-size:12px;
+}
+
+.title{
+text-align:right;
+}
+
+.title h2{
+margin:0;
+font-size:24px;
+}
+
+.info-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:6px;
+margin-bottom:10px;
+}
+
+.box{
+border:1.2px solid #111;
+padding:6px;
+}
+
+.box label{
+display:block;
+font-size:10px;
+font-weight:700;
+margin-bottom:3px;
+color:#555;
+}
+
+input, textarea{
+width:100%;
+border:0;
+outline:0;
+background:transparent;
+font:inherit;
+}
+
+.section{
+border:1.5px solid #111;
+padding:8px;
+font-weight:700;
+background:#f3f3f3;
+margin-top:8px;
+border-bottom:0;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+table-layout:fixed;
+}
+
+th,td{
+border:1px solid #333;
+padding:5px;
+font-size:11px;
+vertical-align:top;
+}
+
+th{
+background:#f3f3f3;
+}
+
+.products th:nth-child(1),
+.products td:nth-child(1){width:6%}
+
+.products th:nth-child(2),
+.products td:nth-child(2){width:16%}
+
+.products th:nth-child(3),
+.products td:nth-child(3){width:38%}
+
+.products th:nth-child(4),
+.products td:nth-child(4){width:12%}
+
+.products th:nth-child(5),
+.products td:nth-child(5){width:12%}
+
+.products th:nth-child(6),
+.products td:nth-child(6){width:16%}
+
+.products textarea{
+resize:none;
+overflow:hidden;
+min-height:34px;
+line-height:1.35;
+font-size:11px;
+padding:2px 0;
+}
+
+.center{text-align:center}
+
+.sil button{
+padding:4px 6px;
+font-size:10px;
+}
+
+.note{
+margin-top:10px;
+border:1.2px solid #111;
+padding:8px;
+}
+
+.note textarea{
+min-height:70px;
+}
+
+.signs{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-top:12px;
+}
+
+.sign{
+border:1.2px solid #111;
+height:90px;
+padding:8px;
+position:relative;
+}
+
+.sign b{
+display:block;
+margin-bottom:40px;
+}
+
+@media(max-width:900px){
+.page{
+width:100%;
+min-height:auto;
+padding:12px;
+}
+.info-grid,
+.signs{
+grid-template-columns:1fr;
+}
+.header{
+flex-direction:column;
+align-items:flex-start;
+gap:10px;
+}
+.title{
+text-align:left;
+}
+}
+
+@media print{
+body{
+background:#fff;
+}
+
+.toolbar,
+.sil{
+display:none!important;
+}
+
+.page{
+box-shadow:none;
+width:210mm;
+min-height:297mm;
+margin:0;
+padding:6mm;
+}
+
+@page{
+size:A4 portrait;
+margin:6mm;
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="toolbar">
+<button onclick="addRow()">Satır Ekle</button>
+<button onclick="window.print()">PDF / Yazdır</button>
+<button onclick="saveData()">Kaydet</button>
+<button onclick="clearAll()">Temizle</button>
+</div>
+
+<div class="page">
+
+<div class="header">
+<div class="logo">
+<h1>VLOVE</h1>
+<p><b>VLOVE GIDA SANAYİ VE TİC. A.Ş</b></p>
+</div>
+
+<div class="title">
+<h2>SEVK LİSTESİ</h2>
+<p>Erbil / Iraq</p>
+</div>
+</div>
+
+<div class="info-grid">
+<div class="box">
+<label>Sevk No</label>
+<input value="SVK-001">
+</div>
+
+<div class="box">
+<label>Tarih</label>
+<input type="date">
+</div>
+
+<div class="box">
+<label>Plaka</label>
+<input>
+</div>
+
+<div class="box">
+<label>Şoför</label>
+<input>
+</div>
+</div>
+
+<div class="section">ÜRÜNLER</div>
+
+<table class="products">
+<thead>
+<tr>
+<th>No</th>
+<th>Ürün Kodu</th>
+<th>Ürün Adı</th>
+<th>Miktar</th>
+<th>Birim</th>
+<th>Tutar</th>
+<th class="sil">Sil</th>
+</tr>
+</thead>
+
+<tbody id="tbody">
+</tbody>
+</table>
+
+<div class="note">
+<b>NOT</b>
+<textarea placeholder="Not yazabilirsiniz..."></textarea>
+</div>
+
+<div class="signs">
+<div class="sign">
+<b>TESLİM EDEN</b>
+İmza / Kaşe
+</div>
+
+<div class="sign">
+<b>TESLİM ALAN</b>
+İmza
+</div>
+</div>
+
+</div>
+
+<script>
+
+const KEY="vlove_sade_sevk";
+
+function esc(v){
+return String(v||"")
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;");
+}
+
+function autoGrow(){
+document.querySelectorAll("textarea").forEach(t=>{
+t.style.height="auto";
+t.style.height=(t.scrollHeight+2)+"px";
+});
+}
+
+function addRow(data={}){
+
+const tbody=document.getElementById("tbody");
+
+const tr=document.createElement("tr");
+
+tr.innerHTML=`
+<td class="center no"></td>
+
+<td>
+<input value="${esc(data.kod || "")}">
+</td>
+
+<td>
+<textarea>${esc(data.urun || "")}</textarea>
+</td>
+
+<td>
+<input type="number" value="${data.miktar || ""}">
+</td>
+
+<td>
+<input value="${esc(data.birim || "KG")}">
+</td>
+
+<td>
+<input type="number" value="${data.tutar || ""}">
+</td>
+
+<td class="sil center">
+<button onclick="this.closest('tr').remove();updateNos();saveData()">Sil</button>
+</td>
+`;
+
+tbody.appendChild(tr);
+
+updateNos();
+autoGrow();
+saveData();
+}
+
+function updateNos(){
+document.querySelectorAll(".no").forEach((e,i)=>{
+e.textContent=i+1;
+});
+}
+
+function collectData(){
+
+const rows=[];
+
+document.querySelectorAll("#tbody tr").forEach(r=>{
+
+rows.push({
+kod:r.children[1].querySelector("input").value,
+urun:r.children[2].querySelector("textarea").value,
+miktar:r.children[3].querySelector("input").value,
+birim:r.children[4].querySelector("input").value,
+tutar:r.children[5].querySelector("input").value
+});
+
+});
+
+return {
+rows:rows,
+fields:[...document.querySelectorAll(".box input,.note textarea")].map(e=>e.value)
+};
+
+}
+
+function saveData(){
+
+localStorage.setItem(KEY,JSON.stringify(collectData()));
+
+}
+
+function loadData(){
+
+const raw=localStorage.getItem(KEY);
+
+if(!raw){
+
+addRow({
+kod:"VL-001",
+urun:"Ruby Kuvertür Çikolata",
+miktar:"500",
+birim:"KG",
+tutar:"0"
+});
+
+return;
+}
+
+const data=JSON.parse(raw);
+
+const tbody=document.getElementById("tbody");
+tbody.innerHTML="";
+
+data.rows.forEach(r=>addRow(r));
+
+const fields=[...document.querySelectorAll(".box input,.note textarea")];
+
+(data.fields || []).forEach((v,i)=>{
+if(fields[i]) fields[i].value=v;
+});
+
+updateNos();
+autoGrow();
+
+}
+
+document.addEventListener("input",()=>{
+autoGrow();
+saveData();
+});
+
+function clearAll(){
+
+if(confirm("Tüm bilgiler silinsin mi?")){
+
+localStorage.removeItem(KEY);
+location.reload();
+
+}
+
+}
+
+loadData();
+
+</script>
+
+</body>
+</html>
